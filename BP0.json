@@ -1,0 +1,51 @@
+{
+    "name": "BP0",
+    "description": "A sample Hi-Q WFFW blueprint",
+    "states": [
+        "Pending",
+        "Approved"
+    ],
+    "constants": {
+        "approvers": [
+            "chaya@hiqfood.com"
+        ],
+        "accountants": [
+            "chaba@hiqfood.com"
+        ]
+    },
+    "actions": {
+        "Approve": {
+            "state": "Pending",
+            "transition": {
+                "to": "Approved",
+                "before": "Approving",
+                "after": "Approved"
+            },
+            "actor": "#approver"
+        }
+    },
+    "create": "Pending",
+    "read": {
+        "@creator": "Approved",
+        "#approver": "Approved"
+    },
+    "update": {
+        "@creator": {
+            "!#comments": "Pending"
+        },
+        "#approver": {
+            "#comments": [
+                "Pending",
+                "Approved"
+            ]
+        }
+    },
+    "delete": {
+        "@creator": "Pending"
+    },
+    "designer comments": {
+        "1": "Default และ customer actions รวมสิทธิ์ในการ read",
+        "2": "สิทธิ์ในการ read ยังสามารถระบุเพิ่มได้ใน key read",
+        "3": "Update หมายถึงการเปลี่ยนค่า fields ใน document เท่านั้น ไม่รวมถึงการเปลี่ยน state"
+    }
+}
